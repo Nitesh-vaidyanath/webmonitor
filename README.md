@@ -1,10 +1,11 @@
 # webmonitor
 
-This can be used for monitoring your website and also persist results on postgress sql. Later results can be aggregated from postgress sql
+This is used for monitoring your website and also persist results on postgress sql. Later results could be aggregated from postgress sql.
 
-web_monitor.py gets response code, response time, error message and text search, final results are send to kafka brokers. This script can be run as cronjob or kuberentes job. Command line arguments or ini config file can be used, currently envirnoment vairbales are not supported.
+web_monitor.py gets response code, response time, error message and text search; final results are sent to kafka brokers. This script could be run as cronjob or kuberentes job. 
+Command line arguments or ini config file can be used, currently envirnoment vairbales are not supported.
 
-Note: Even certificates can path can be added in config file but currently it is not supported.
+Note: Even for certificates envirnoment vairables can be added in config file but currently it is not supported.
 
 > python3 web_monitor.py  --config_file  /tmp/test.ini  --kafka_ca ./certs/ca.crt --kafka_certfile ./certs/client.crt --kafka_keyfile ./certs/client.key
 ```
@@ -51,7 +52,7 @@ ps_password=<pass>
 ps_db=<db>
 ```
 
-Run consumer to cosume messages from kafka brokers and write to postgres sql.
+Run consumer script to cosume messages from kafka brokers and write results to postgres sql.
 > python3 persist_result.py  --config_file  /tmp/test.ini  --kafka_ca ./certs/ca.crt --kafka_certfile ./certs/client.crt --kafka_keyfile ./certs/client.key --ps_ca ./certs/ps_ca.pem
 ```
 Web monitor
