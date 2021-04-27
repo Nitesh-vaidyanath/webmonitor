@@ -2,6 +2,7 @@ import gevent
 from gevent import monkey
 import os
 
+# gevent hangs when importes in test cases, so for test cases please set env variable "WEB_MONITOR_TEST"
 if os.getenv("WEB_MONITOR_TEST", "false") == "true":
    monkey.patch_all(thread=False, socket=False)
 else:
@@ -28,6 +29,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 def arguments():
+    #Attributes from commandline arguments or from config file *.ini
     parser = argparse.ArgumentParser(description='Web monitor')
     parser.add_argument('--config_file', dest='config_file',type=str,help='config file', default="")
     parser.add_argument('--urls', dest='urls' , nargs='+', help='Website url to monitor', default=[])
@@ -72,6 +74,7 @@ def arguments():
     return (kafka_brokers, urls, regexString, args.kafka_ssl, kafka_topic, kafka_ca, kafka_certfile, kafka_keyfile)
 
 class WebSiteMonitor:
+    '''This class will monitor list of websites and return result'''
     def __init__(self, urls, regex):
         self.urls = urls
         self.regex = regex
@@ -118,6 +121,7 @@ class WebSiteMonitor:
 
 
 class kafkaProducer:
+    '''This class will send results to kafka producer'''
     def __init__(self, kafka_borkers, message, ssl, kafka_ca, kafka_certfile, kafka_keyfile):
         self.kafka_borkers =  kafka_borkers
         if ssl:
