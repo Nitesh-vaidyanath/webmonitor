@@ -40,6 +40,10 @@ Config ini file
 brokers=kafka.<>.aivencloud.com:<port>
 topic=test
 kafka_group_id=test-consumer-group
+kafka_ssl=True
+kafka_ca=/home/ubuntu/certs/ca.crt
+kafka_certfile=/home/ubuntu/certs/client.crt
+kafka_keyfile=/home/ubuntu/certs/client.key
 
 [urls]
 urls=http://www.testingmcafeesites.com/index.html2,http://python-requests.org/x.txt,http://www.testingmcafeesites.com/index.html,http://www.testingmcafeesites.com/index.html,http://testnoavailable.com
@@ -50,6 +54,7 @@ ps_port=<port>
 ps_user=<admin>
 ps_password=<pass>
 ps_db=<db>
+ps_ca=/home/ubuntu/certs/ps_ca.pem
 ```
 
 Run consumer script to cosume messages from kafka brokers and write results to postgres sql.
