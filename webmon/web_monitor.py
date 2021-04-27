@@ -1,7 +1,11 @@
 import gevent
 from gevent import monkey
+import os
 
-monkey.patch_all()
+if os.getenv("WEB_MONITOR_TEST", "false") == "true":
+   monkey.patch_all(thread=False, socket=False)
+else:
+   monkey.patch_all()
 
 import requests
 import argparse
@@ -9,7 +13,6 @@ import sys
 import logging
 from configparser import ConfigParser
 import json
-import os
 import re
 from kafka import KafkaProducer
 
@@ -133,14 +136,12 @@ class kafkaProducer:
                                         )       
         self.messages = message
 
-    @staticmethod
-    def handle_success(record_metadata):
+    def handle_success(self, record_metadata):
         logger.info(record_metadata.topic)
         logger.debug(record_metadata.partition)
         logger.debug(record_metadata.offset)
     
-    @staticmethod
-    def handle_failure(excp):
+    def handle_failure(self, excp):
         logger.error('I am an errback', exc_info=excp)
     
 
@@ -148,7 +149,7 @@ class kafkaProducer:
         for message in self.messages:
             logger.debug("sending message {} to kafka".format(message))
             future = self.producer.send(topic, key=key.encode() if key else None,
-                                        value=message if message else None).add_callback(kafkaObject.handle_success).add_errback(kafkaObject.handle_failure)
+                                        value=message if message else None).add_callback(self.handle_success).add_errback(self.handle_failure)
 
 
     def finalize(self):
