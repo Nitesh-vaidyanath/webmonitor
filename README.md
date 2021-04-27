@@ -7,7 +7,7 @@ Command line arguments or ini config file can be used, currently envirnoment vai
 
 Note: Even for certificates envirnoment vairables can be added in config file but currently it is not supported.
 
-> python3 web_monitor.py  --config_file  /tmp/test.ini  --kafka_ca ./certs/ca.crt --kafka_certfile ./certs/client.crt --kafka_keyfile ./certs/client.key
+> python3 webmon/web_monitor.py  --config_file  /tmp/test.ini  --kafka_ca ./certs/ca.crt --kafka_certfile ./certs/client.crt --kafka_keyfile ./certs/client.key
 ```
 python3 web_monitor.py --help
 usage: web_monitor.py [-h] [--config_file CONFIG_FILE] [--urls URLS [URLS ...]] [--kafka_brokers KAFKA_BROKERS] [--regex REGEXSTRING] [--topic TOPIC] [--kafka_ssl KAFKA_SSL]
@@ -53,7 +53,7 @@ ps_db=<db>
 ```
 
 Run consumer script to cosume messages from kafka brokers and write results to postgres sql.
-> python3 persist_result.py  --config_file  /tmp/test.ini  --kafka_ca ./certs/ca.crt --kafka_certfile ./certs/client.crt --kafka_keyfile ./certs/client.key --ps_ca ./certs/ps_ca.pem
+> python3 webmon/persist_result.py  --config_file  /tmp/test.ini  --kafka_ca ./certs/ca.crt --kafka_certfile ./certs/client.crt --kafka_keyfile ./certs/client.key --ps_ca ./certs/ps_ca.pem
 ```
 Web monitor
 
@@ -85,7 +85,7 @@ optional arguments:
 
 Test cases:
 ```
-python3 test/test_web_monitor.py 
+python3 tests/test_web_monitor.py 
 2021-04-26 22:20:59,446 - INFO - get details for url http://test.com
 .2021-04-26 22:20:59,448 - INFO - get details for url http://test.com
 .
@@ -94,3 +94,20 @@ Ran 2 tests in 0.015s
 
 OK
 ```
+```
+python3 tests/test_modules.py
+/home/ubuntu/webmon/web_monitor.py:6: MonkeyPatchWarning: Monkey-patching ssl after ssl has already been imported may lead to errors, including RecursionError on Python 3.6. It may also silently lead to incorrect behaviour on Python 3.7. Please monkey-patch earlier. See https://github.com/gevent/gevent/issues/1016. Modules that had direct imports (NOT patched): ['urllib3.contrib.pyopenssl (/usr/lib/python3/dist-packages/urllib3/contrib/pyopenssl.py)'].
+  monkey.patch_all(thread=False, socket=False)
+2021-04-27 00:46:08,946 - INFO - commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:08,946 - INFO - commited to postgress database.table : webstatus.webmonitor table
+INFO:Webmonitor:commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:09,073 - INFO - commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:09,073 - INFO - commited to postgress database.table : webstatus.webmonitor table
+INFO:Webmonitor:commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:09,199 - INFO - commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:09,199 - INFO - commited to postgress database.table : webstatus.webmonitor table
+INFO:Webmonitor:commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:09,326 - INFO - commited to postgress database.table : webstatus.webmonitor table
+2021-04-27 00:46:09,326 - INFO - commited to postgress database.table : webstatus.webmonitor table
+```
+
