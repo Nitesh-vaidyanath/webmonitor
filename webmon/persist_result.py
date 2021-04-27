@@ -89,6 +89,7 @@ def arguments():
 
 
 class kafkaConsumer:
+    '''This class will consume messages from kafka broker'''
     def __init__(self, kafka_borkers, kafka_ssl, topic, kafka_ca, kafka_certfile, kafka_keyfile, kafka_group_id,
                  ps_host, ps_port, ps_user, ps_password, ps_db, ps_ssl, ps_ca):
         self.kafka_borkers =  kafka_borkers
@@ -137,6 +138,7 @@ class kafkaConsumer:
             self.consumer.commit()
 
 class postgress:
+    '''Postgress connection'''
     def __init__(self, ps_host, ps_port, ps_user, ps_password, ps_db, ps_ssl, sslrootcert):
         try:
           if ps_ssl:
